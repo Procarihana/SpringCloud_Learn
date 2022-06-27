@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.luwei.system.mapper.AppUserTypeMapper">
+    <resultMap id="AppUserType" type="com.luwei.system.domain.dto.AppUserTypeDTO">
+        <result property="appUserTypeId" column="app_user_type_id"/>
+        <result property="typeId" column="type_id"/>
+        <result property="appUserId" column="app_user_id"/>
+        <result property="remark" column="remark"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="deleted" column="deleted"/>
+    </resultMap>
+    <sql id="selectAppUserType">
+select app_user_type__id,type_id,app_user_id,remark,create_by,create_time,update_by,update_time,deleted</sql>
+
+    <select id="selectAppUserTypeList" resultType="com.luwei.system.domain.AppUserType"
+            parameterType="com.luwei.system.domain.dto.AppUserTypeDTO">
+        <include refid="selectAppUserType"/>
+        from app_user_type
+        <where>
+
+        </where>
+
+    </select>
+</mapper>

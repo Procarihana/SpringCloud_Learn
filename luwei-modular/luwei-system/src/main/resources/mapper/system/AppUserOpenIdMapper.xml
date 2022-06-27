@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.luwei.system.mapper.AppUserOpenIdMapper">
+    <resultMap id="AppUserOpenId" type="com.luwei.system.api.domain.AppUserOpenIdDTO">
+        <result property="appUserOpenId" column="app_user_open_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="openId" column="open_id"/>
+        <result property="openIdType" column="open_id_type"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+    <sql id="selectAppUserOpenId">
+select app_user_open_id,user_id,open_id,open_id_type,create_by,create_time,update_by,update_time,remark</sql>
+
+    <select id="selectAppUserOpenIdList" resultType="com.luwei.system.domain.AppUserOpenId"
+            parameterType="com.luwei.system.api.domain.AppUserOpenIdDTO">
+        <include refid="selectAppUserOpenId"/>
+        from app_user_open_id
+        <where>
+            <if test="query.appUserOpenId != null ">
+                and app_user_open_id = #{query.appUserOpenId}
+            </if>
+            <if test="query.userId != null ">
+                and user_id = #{query.userId}
+            </if>
+            <if test="query.openId != null and query.openId != ''">
+                and open_id = #{query.openId}
+            </if>
+            <if test="query.openIdType != null ">
+                and open_id_type = #{query.openIdType}
+            </if>
+            <if test="query.createBy != null and query.createBy != ''">
+                and create_by = #{query.createBy}
+            </if>
+            <if test="query.createTime != null ">
+                and create_time = #{query.createTime}
+            </if>
+            <if test="query.updateBy != null and query.updateBy != ''">
+                and update_by = #{query.updateBy}
+            </if>
+            <if test="query.updateTime != null ">
+                and update_time = #{query.updateTime}
+            </if>
+            <if test="query.remark != null and query.remark != ''">
+                and remark = #{query.remark}
+            </if>
+        </where>
+
+    </select>
+</mapper>

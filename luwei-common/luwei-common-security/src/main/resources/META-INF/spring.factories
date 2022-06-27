@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.luwei.common.security.service.SystemTokenService,\
+  com.luwei.common.security.aspect.PreAuthorizeAspect,\
+  com.luwei.common.security.handler.GlobalExceptionHandler

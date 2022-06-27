@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.luwei.system.mapper.AppUserRoleMapper">
+    <resultMap id="AppUserRole" type="com.luwei.system.domain.dto.AppUserRoleDTO">
+        <result property="appUserId" column="app_user_id"/>
+        <result property="appRoleId" column="app_role_id"/>
+    </resultMap>
+    <sql id="selectAppUserRole">
+select app_user_id,app_role_id,</sql>
+
+    <select id="selectAppUserRoleList" resultType="com.luwei.system.domain.AppUserRole"
+            parameterType="com.luwei.system.domain.dto.AppUserRoleDTO">
+        <include refid="selectAppUserRole"/>
+        from app_user_role
+        <where>
+
+        </where>
+
+    </select>
+</mapper>

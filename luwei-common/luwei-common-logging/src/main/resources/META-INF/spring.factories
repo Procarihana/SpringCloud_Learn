@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.luwei.common.logging.service.LogService,\
+  com.luwei.common.logging.aspect.LogBackendAspect

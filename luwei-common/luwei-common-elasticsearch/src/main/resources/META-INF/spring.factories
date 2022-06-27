@@ -1,0 +1,5 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.luwei.common.elasticsearch.config.ElasticSearchConfig,\
+  com.luwei.common.elasticsearch.service.impl.ElasticSearchServiceImpl
+
+  

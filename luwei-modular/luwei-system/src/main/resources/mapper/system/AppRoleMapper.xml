@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.luwei.system.mapper.AppRoleMapper">
+    <resultMap id="AppRole" type="com.luwei.system.domain.dto.AppRoleDTO">
+        <result property="roleId" column="role_id"/>
+        <result property="roleName" column="role_name"/>
+        <result property="roleKey" column="role_key"/>
+        <result property="roleSort" column="role_sort"/>
+        <result property="dataScope" column="data_scope"/>
+        <result property="menuCheckStrictly" column="menu_check_strictly"/>
+        <result property="deptCheckStrictly" column="dept_check_strictly"/>
+        <result property="status" column="status"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+    <resultMap id="AppRoleSimple" type="com.luwei.system.domain.AppRole">
+        <result property="roleId" column="role_id"/>
+        <result property="roleName" column="role_name"/>
+    </resultMap>
+    <sql id="selectAppRole">
+select role_id,role_name,role_key,role_sort,data_scope,menu_check_strictly,dept_check_strictly,status,del_flag,create_by,create_time,update_by,update_time,remark,</sql>
+
+    <select id="selectAppRoleList" resultType="com.luwei.system.domain.AppRole"
+            parameterType="com.luwei.system.domain.dto.AppRoleDTO">
+        <include refid="selectAppRole"/>
+        from app_role
+        <where>
+            <if test="query.roleId != null " >
+                and role_id = #{query.roleId}
+            </if>
+            <if test="query.roleName != null and query.roleName != ''" >
+                and role_name = #{query.roleName}
+            </if>
+            <if test="query.roleKey != null and query.roleKey != ''" >
+                and role_key = #{query.roleKey}
+            </if>
+            <if test="query.roleSort != null " >
+                and role_sort = #{query.roleSort}
+            </if>
+            <if test="query.dataScope != null and query.dataScope != ''" >
+                and data_scope = #{query.dataScope}
+            </if>
+            <if test="query.menuCheckStrictly != null " >
+                and menu_check_strictly = #{query.menuCheckStrictly}
+            </if>
+            <if test="query.deptCheckStrictly != null " >
+                and dept_check_strictly = #{query.deptCheckStrictly}
+            </if>
+            <if test="query.status != null and query.status != ''" >
+                and status = #{query.status}
+            </if>
+            <if test="query.delFlag != null and query.delFlag != ''" >
+                and del_flag = #{query.delFlag}
+            </if>
+            <if test="query.createBy != null and query.createBy != ''" >
+                and create_by = #{query.createBy}
+            </if>
+            <if test="query.createTime != null " >
+                and create_time = #{query.createTime}
+            </if>
+            <if test="query.updateBy != null and query.updateBy != ''" >
+                and update_by = #{query.updateBy}
+            </if>
+            <if test="query.updateTime != null " >
+                and update_time = #{query.updateTime}
+            </if>
+            <if test="query.remark != null and query.remark != ''" >
+                and remark = #{query.remark}
+            </if>
+        </where>
+
+    </select>
+    <select id="getRoleNameListByUserId" resultType="java.lang.String" parameterType="java.lang.Long">
+        select distinct ar.role_key
+        from app_role ar
+        left join app_user_role au on ar.role_id = au.app_role_id
+        <where>
+            au.app_user_id = #{userId}
+        </where>
+    </select>
+</mapper>

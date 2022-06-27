@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.luwei.system.mapper.AppUserIdentityMapper">
+    <resultMap id="AppUserIdentity" type="com.luwei.system.domain.dto.AppUserIdentityDTO">
+        <result property="appUserIdentityId" column="app_user_identity_id"/>
+        <result property="identityId" column="identity_id"/>
+        <result property="identityName" column="identity_name"/>
+        <result property="qualificationId" column="qualification_id"/>
+        <result property="auditStatus" column="audit_status"/>
+        <result property="auditOpinion" column="audit_opinion"/>
+        <result property="auditCode" column="audit_code"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+    <sql id="selectAppUserIdentity">
+select app_user_identity_id,identity_id,identity_name,qualification_id,audit_status,audit_opinion,audit_code,create_by,create_time,update_by,update_time,remark</sql>
+
+    <select id="selectAppUserIdentityList" resultType="com.luwei.system.domain.AppUserIdentity"
+            parameterType="com.luwei.system.domain.dto.AppUserIdentityDTO">
+        <include refid="selectAppUserIdentity"/>
+        from app_user_identity
+        <where>
+            <if test="query.appUserIdentityId != null ">
+                and app_user_identity_id = #{query.appUserIdentityId}
+            </if>
+            <if test="query.identityId != null and query.identityId != ''">
+                and identity_id = #{query.identityId}
+            </if>
+            <if test="query.identityName != null and query.identityName != ''">
+                and identity_name = #{query.identityName}
+            </if>
+            <if test="query.qualificationId != null and query.qualificationId != ''">
+                and qualification_id = #{query.qualificationId}
+            </if>
+            <if test="query.auditStatus != null ">
+                and audit_status = #{query.auditStatus}
+            </if>
+            <if test="query.auditOpinion != null and query.auditOpinion != ''">
+                and audit_opinion = #{query.auditOpinion}
+            </if>
+            <if test="query.createBy != null and query.createBy != ''">
+                and create_by = #{query.createBy}
+            </if>
+            <if test="query.auditCode != null and query.auditCode != ''">
+                and audit_code = #{query.auditCode}
+            </if>
+            <if test="query.createTime != null ">
+                and create_time = #{query.createTime}
+            </if>
+            <if test="query.updateBy != null and query.updateBy != ''">
+                and update_by = #{query.updateBy}
+            </if>
+            <if test="query.updateTime != null ">
+                and update_time = #{query.updateTime}
+            </if>
+            <if test="query.remark != null and query.remark != ''">
+                and remark = #{query.remark}
+            </if>
+        </where>
+
+    </select>
+    <select id="getAppUserIdentitySysVOList" resultType="com.luwei.system.domain.vo.AppUserIdentitySysVO"
+            parameterType="com.luwei.system.domain.query.AppUserIdentityQuery">
+        SELECT
+        au.user_id,
+        au.phone_number as phone,
+        au.avatar,
+        aui.identity_name,
+        aui.identity_id,
+        aui.qualification_id,
+        aui.audit_status,
+        aui.create_time,
+        aui.audit_opinion,
+        aui.audit_code,
+        aui.app_user_identity_id,
+        aui.role_id,
+        ar.role_name
+        FROM
+        app_user au
+        LEFT JOIN app_user_identity aui ON au.user_id = aui.user_id
+        LEFT JOIN app_user_role aur ON aur.app_user_id = au.user_id
+        LEFT JOIN app_role ar ON aur.app_role_id = ar.role_id
+        <where>
+        au.deleted = 0
+            <if test="query.userId != null and query.userId != ''">
+                and aui.user_id = #{query.userId}
+            </if>
+            <if test="query.phone != null and query.phone != ''">
+                AND au.phone_number like concat('%', #{query.phone}, '%')
+            </if>
+            <if test="query.userRoleId != null">
+                and  aur.role_id = #{query.userRoleId}
+            </if>
+            <if test="query.auditStatus != null">
+                and  aui.audit_status = #{query.auditStatus}
+            </if>
+            <if test="query.appUserIdentityId != null">
+                and  aui.app_user_identity_id = #{query.appUserIdentityId}
+            </if>
+            <if test="query.identityName != null">
+                AND aui.identity_name like concat('%', #{query.identityName}, '%')
+            </if>
+        </where>
+        order by aui.create_time desc
+    </select>
+    <select id="checkQualificationId" resultType="java.lang.Long"
+            parameterType="com.luwei.system.domain.dto.AppUserIdentityDTO">
+            SELECT count(1) from app_user_identity
+            <where>
+                qualification_id = #{dto.qualificationId} and role_id = #{dto.roleId}
+            </where>
+    </select>
+</mapper>
